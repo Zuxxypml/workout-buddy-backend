@@ -7,15 +7,19 @@ const workoutRoutes = require("./routes/workouts");
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 const PORT = process.env.PORT;
-app.use(function (req, res, next) {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://zuxxy-workout-buddy.netlify.app"
-  ); // update to match the domain you will make the request from
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+app.use((req, res, next) => {
+  const corsWhitelist = [
+    "https://zuxxy-workout-buddy.netlify.app",
+    "http://localhost:3000",
+  ];
+  if (corsWhitelist.indexOf(req.headers.origin) !== -1) {
+    res.header("Access-Control-Allow-Origin", req.headers.origin);
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+  }
+
   next();
 });
 
