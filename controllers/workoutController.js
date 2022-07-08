@@ -20,11 +20,11 @@ const createWorkout = async (req, res) => {
   }
   console.log(emptyFieldsArray);
 
-  if (emptyFieldsArray > 0) {
+  if (emptyFieldsArray.length > 0)
     return res
       .status(400)
       .json({ error: "Please all fields are required", emptyFieldsArray });
-  } else {
+  else {
     // add to the database
     try {
       const workout = await Workout.create({ title, load, reps });
